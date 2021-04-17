@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+    php:
+        container_name: phpfpm
+        image: library/php:8.0-fpm
+        volumes:
+            - "${WEB_ROOT}:/app/public"
+    nginx:
+        container_name: nginx
+        image: library/nginx:latest
+        ports:
+            - "80:80"
+        volumes:
+            - "${WEB_ROOT}:/app/public"
+            - "./data/nginx/conf.d:/etc/nginx/conf.d"
+        depends_on:
+            - php
